@@ -1,0 +1,115 @@
+[
+  {
+    "id": "PZ-001",
+    "title": "Casa com jardim e espaço para viver",
+    "type": "Casa",
+    "neighborhood": "Jardim Europa",
+    "street": "Rua das Oliveiras, 120",
+    "price": 780000,
+    "area": 210,
+    "beds": 3,
+    "baths": 3,
+    "parking": 2,
+    "featured": true,
+    "status": "published",
+    "photos": [
+      "assets/house1.jpg",
+      "assets/interior.jpg"
+    ],
+    "description": "Uma casa de espaços integrados, com iluminação natural e um jardim para aproveitar os dias com tranquilidade.\n\nA planta ilustrativa conta com três quartos, sala de estar e jantar, cozinha e área externa. Um convite para imaginar sua próxima fase.\n\nAnúncio fictício para demonstração do protótipo. Características e fotos não representam um imóvel real à venda."
+  },
+  {
+    "id": "PZ-002",
+    "title": "Apartamento claro e acolhedor",
+    "type": "Apartamento",
+    "neighborhood": "Centro",
+    "street": "Rua das Flores, 85",
+    "price": 420000,
+    "area": 92,
+    "beds": 2,
+    "baths": 2,
+    "parking": 1,
+    "featured": false,
+    "status": "published",
+    "photos": [
+      "assets/interior.jpg",
+      "assets/apartment.jpg"
+    ],
+    "description": "Ambientes leves, sala integrada e espaço para criar uma rotina confortável. Apartamento ilustrativo com dois quartos e uma vaga de garagem.\n\nAnúncio fictício. Fotos, endereço e características são demonstrativos."
+  },
+  {
+    "id": "PZ-003",
+    "title": "Casa contemporânea com piscina",
+    "type": "Casa",
+    "neighborhood": "Parque das Araucárias",
+    "street": "Alameda dos Ipês, 240",
+    "price": 1250000,
+    "area": 320,
+    "beds": 4,
+    "baths": 4,
+    "parking": 3,
+    "featured": true,
+    "status": "published",
+    "photos": [
+      "assets/hero.jpg",
+      "assets/house2.jpg"
+    ],
+    "description": "Linhas contemporâneas, espaços amplos e uma área externa feita para reunir pessoas. Exemplo de imóvel com piscina, quatro quartos e três vagas.\n\nAnúncio fictício. As imagens são referências visuais e não representam um imóvel real à venda."
+  },
+  {
+    "id": "PZ-004",
+    "title": "Um novo começo com mais espaço",
+    "type": "Casa",
+    "neighborhood": "Vila Verde",
+    "street": "Rua dos Jacarandás, 64",
+    "price": 565000,
+    "area": 165,
+    "beds": 3,
+    "baths": 2,
+    "parking": 2,
+    "featured": false,
+    "status": "published",
+    "photos": [
+      "assets/house2.jpg",
+      "assets/interior.jpg"
+    ],
+    "description": "Casa ilustrativa com ambientes versáteis e área externa. Espaço para acomodar os planos da família e aproveitar momentos ao ar livre.\n\nAnúncio fictício para demonstração."
+  },
+  {
+    "id": "PZ-005",
+    "title": "Apartamento para uma vida leve",
+    "type": "Apartamento",
+    "neighborhood": "Jardim Europa",
+    "street": "Avenida das Palmeiras, 310",
+    "price": 295000,
+    "area": 68,
+    "beds": 2,
+    "baths": 1,
+    "parking": 1,
+    "featured": false,
+    "status": "published",
+    "photos": [
+      "assets/apartment.jpg",
+      "assets/interior.jpg"
+    ],
+    "description": "Uma opção compacta e funcional, com dois quartos, sala e uma vaga. Um exemplo para experimentar a busca por tipo, bairro e faixa de preço.\n\nAnúncio fictício para demonstração."
+  },
+  {
+    "id": "PZ-006",
+    "title": "O espaço para construir seus planos",
+    "type": "Terreno",
+    "neighborhood": "Vila Verde",
+    "street": "Rua do Bosque, lote 12",
+    "price": 185000,
+    "area": 450,
+    "beds": 0,
+    "baths": 0,
+    "parking": 0,
+    "featured": false,
+    "status": "published",
+    "photos": [
+      "assets/land.jpg"
+    ],
+    "description": "Terreno ilustrativo com 450 m². Um ponto de partida para imaginar um projeto feito à sua maneira.\n\nImagem meramente ilustrativa. Endereço, preço e condições não correspondem a uma oferta real."
+  }
+]
