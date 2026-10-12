@@ -11,3 +11,6 @@
  .admin-stats span { font-size: 12px; min-height: 36px; }
  .login-form input { font-size: 16px; }
 }
+
+/* A quiet white surface keeps the original logo legible over the login photo. */
+.login-brand { width: min(400px, 100%); background: #fff; padding: 12px 16px; border-radius: 4px; }

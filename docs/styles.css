@@ -35,3 +35,15 @@ input, select, textarea { font-size: 16px; }
  .search-heading .active-label { padding-bottom: 10px; }
  .admin-row-info { min-width: 0; }
 }
+
+/* Display the supplied artwork unchanged, framing only its outer white margins. */
+.brand { width: clamp(280px, 26vw, 350px); max-width: 100%; flex: 0 0 auto; gap: 0; }
+.brand svg.brand-logo { display: block; width: 100%; height: auto; aspect-ratio: 1420 / 340; overflow: hidden; stroke: none; }
+.footer-top .brand { width: 300px; }
+@media (min-width: 851px) and (max-width: 1050px) {
+ .header .brand { width: 280px; }
+}
+@media (max-width: 650px) {
+ .header .brand { width: min(300px, calc(100vw - 100px)); }
+ .footer-top .brand { width: min(300px, 100%); }
+}

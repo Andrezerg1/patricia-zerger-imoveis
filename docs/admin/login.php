@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="login-story" aria-label="Patricia Zerger Imóveis">
       <img class="login-photo" src="assets/hero.jpg" alt="Casa contemporânea com piscina">
       <div class="login-shade"></div>
-      <a class="brand login-brand" href="./"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M5 27 28 7l23 20M12 24v25h32V24M23 49V33h10v16M35 13V7h8v13"/></svg><span>Patricia Zerger<small>IMÓVEIS</small></span></a>
+      <a class="brand login-brand" href="./" aria-label="Patricia Zerger, corretora de imóveis — CRECI 35610 — voltar ao site"><svg class="brand-logo" viewBox="100 100 1420 340" width="1420" height="340" aria-hidden="true"><image href="assets/patricia-zerger-logo-verde.png" width="1600" height="532"/></svg></a>
       <div class="login-story-copy"><p class="eyebrow light">CUIDE DE CADA NOVA HISTÓRIA.</p><h1>Seu catálogo.<br>Novas possibilidades.</h1><p>Um espaço para organizar seus imóveis<br>e preparar os próximos encontros.</p></div>
       <span class="login-story-footer">Patricia Zerger Imóveis · Área restrita</span>
     </section>
