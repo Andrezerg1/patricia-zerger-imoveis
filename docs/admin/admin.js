@@ -30,3 +30,19 @@ loadProperties().then(() => $('#new-property').disabled = false).catch(error => 
  $('#admin-count').textContent = 'Não foi possível carregar os imóveis'; notify(error.message);
 });
 window.addEventListener('pageshow', event => { if (event.persisted) location.reload(); });
+
+async function settingsApi(method='GET', data) {
+ const response=await fetch('api/settings.php?admin=1',{method,cache:'no-store',headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},...(data?{body:JSON.stringify(data)}:{})});
+ if(response.status===401){location.href='admin/login.php?expired=1';throw new Error('Sua sessão expirou. Entre novamente.');}
+ const result=await response.json();
+ if(!response.ok)throw new Error(result.error || 'Não foi possível salvar o contato.');
+ return result;
+}
+const settingsForm=$('#settings-form'), settingsStatus=$('#settings-status'), settingsButton=$('[type="submit"]',settingsForm);
+settingsApi().then(settings=>{$('#whatsapp-number').value=settings.whatsapp;settingsButton.disabled=false;}).catch(error=>{settingsStatus.textContent=error.message;settingsStatus.hidden=false;});
+settingsForm.addEventListener('submit',async event=>{
+ event.preventDefault(); settingsButton.disabled=true;settingsButton.textContent='Salvando…';settingsStatus.hidden=true;
+ try{const settings=await settingsApi('POST',{whatsapp:settingsForm.elements.whatsapp.value});settingsForm.elements.whatsapp.value=settings.whatsapp;settingsStatus.textContent='Contato atualizado no site.';}
+ catch(error){settingsStatus.textContent=error.message;}
+ finally{settingsButton.disabled=false;settingsButton.textContent='Salvar contato';settingsStatus.hidden=false;}
+});

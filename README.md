@@ -1,73 +1,46 @@
 # Patricia Zerger Imóveis
 
-Vitrine imobiliária responsiva em HTML, CSS e JavaScript, com administração protegida por PHP.
-
-**Versão local:** http://127.0.0.1:4173/ · **Administração:** http://127.0.0.1:4173/admin/
-
-A prévia anterior permanece no GitHub Pages a partir da branch `main`. A nova administração está na branch `codex/admin-hostgator`, exige PHP e aguarda instalação na HostGator. GitHub Pages não executa esta versão; não mescle esta branch na fonte de publicação atual antes de migrar a hospedagem.
+Site imobiliário com catálogo no servidor, painel administrativo protegido e contato por WhatsApp. Destino de publicação: **www.patriciazergerimoveis.com.br**, em hospedagem HostGator com PHP e cPanel.
 
 ## Funcionalidades
 
-- Catálogo com seis imóveis ilustrativos.
-- Filtros combinados por tipo, bairro, preço, rua/código e quartos.
-- Ordenação por destaque, preço e área.
-- Detalhes do imóvel com galeria e formulário de interesse pré-preenchido.
-- Página administrativa separada, com login, sessão e botão para sair.
-- Criação, edição, destaque, rascunho e exclusão de imóveis após o login.
-- Upload de até oito fotos por imóvel, redimensionadas para até 1600 px.
-- Armazenamento compartilhado no servidor: catálogo JSON e fotos em arquivos.
-- Interface responsiva em verde, branco e cinza; sem cadastro de visitantes ou pagamentos.
+- Busca por tipo, bairro, preço, rua/código e quartos; ordenação por destaque, preço e área.
+- Detalhes de imóveis com galeria de até oito fotos.
+- Administração em /admin/: login, cadastro, edição, exclusão, destaque, rascunho e publicação.
+- Contato por WhatsApp com texto preparado pelo formulário; o visitante confirma o envio no WhatsApp. O site não armazena esses dados.
+- Número comercial editável no painel. Valor inicial fornecido: +55 43 9855-9499.
+- Layout responsivo com logotipo fornecido e tipografia ajustada para celular e computador.
 
-## Limites do protótipo
-
-Os imóveis, endereços, características e valores iniciais são fictícios. A administração usa uma conta única. As alterações publicadas passam a ser vistas por todos os visitantes; rascunhos são listados somente para o administrador. O formulário de contato ainda simula o envio.
-
-O catálogo inicia com os seis imóveis do repositório. Dados antigos salvos em IndexedDB não são importados automaticamente e permanecem no navegador de origem.
-
-## Desenvolvimento local
-
-Com PHP 8.2+ instalado, configure `private/config.php` a partir do exemplo, usando o usuário e um hash gerado por `password_hash()` para a senha. O arquivo real de credenciais e os dados de execução ficam fora do Git. A cópia local deste trabalho já está configurada.
-
-```sh
-git clone https://github.com/Andrezerg1/patricia-zerger-imoveis.git
-cd patricia-zerger-imoveis
-git switch codex/admin-hostgator
-php -d post_max_size=16M -d display_errors=0 -S 127.0.0.1:4173 -t docs router.php
-```
-
-Abra http://127.0.0.1:4173. Não há bibliotecas externas de backend nem etapa de build. Como alternativa, `node server.mjs` inicia o mesmo servidor PHP; defina `PHP_BINARY` se o executável não estiver no PATH.
+A primeira instalação começa sem anúncios. Cadastre imóveis reais pelo painel. Um catálogo já existente em private/data é preservado. O painel usa uma conta única e gerencia imóveis e WhatsApp; não é um editor de textos ou de layout.
 
 ## Publicação
 
-Siga [HOSTGATOR.md](HOSTGATOR.md). Em produção, `docs/` (ou seu conteúdo em `public_html/`) é a raiz pública; `private/` fica fora dela. Use HTTPS e PHP 8.2+. O código pode ser versionado no GitHub, mas o envio ao GitHub não instala o sistema na HostGator. Não publique esta versão no GitHub Pages.
+Siga o [passo a passo para a HostGator](HOSTGATOR.md). Esta versão está em **codex/admin-hostgator**. A branch main ainda alimenta o GitHub Pages. Enviar ao GitHub não instala o site na HostGator; não mescle esta branch na fonte do Pages enquanto ele for usado, pois o painel exige PHP.
 
-```text
-docs/
-  index.html
-  styles.css
-  app.js
-  common.js
-  admin/
-  api/
-  assets/
-  uploads/       # fotos criadas pelo administrador; fora do Git
-private/
-  bootstrap.php
-  config.php     # conta e hash da senha; fora do Git
-  seed.json
-  data/          # catálogo e limites de login; fora do Git
-router.php
-server.mjs
+O conteúdo de docs/ vai para a raiz pública, normalmente public_html/. A pasta private/ fica ao lado dela, fora da raiz pública. Não exige banco de dados, Composer ou Node.js no servidor.
+
+private/config.php, private/data/ e fotos de docs/uploads/ ficam fora do Git. Envie a configuração real separadamente se usar o ZIP do GitHub. Preserve esses arquivos nos backups e atualizações.
+
+Para gerar o pacote de primeira instalação no Windows com PowerShell 7:
+
+```powershell
+./scripts/package.ps1 -OutputPath C:/caminho/patricia-zerger-hostgator.zip -IncludeLocalConfig
 ```
 
-## Próximas etapas
+O parâmetro inclui a configuração local no pacote privado de instalação. Sem ele, o ZIP exige configurar a conta separadamente. Não publique esse pacote em repositórios ou dentro da raiz pública.
 
-Definir cidade de atuação, logotipo definitivo e canais oficiais. Conectar o envio real de contatos e configurar a hospedagem. Os limites e procedimentos de backup estão em [HOSTGATOR.md](HOSTGATOR.md).
+## Desenvolvimento e validação
 
-## Testes
+Requer PHP 8.2+; validado com PHP 8.4. Configure private/config.php a partir de private/config.example.php usando password_hash() para a senha. Execute na raiz:
 
-`tests/integration.mjs` inicia um servidor PHP descartável e testa autenticação, autorização, CSRF, expiração, limite de tentativas, cadastro, edição, publicação, rascunhos, upload e exclusão. Requer Node.js e PHP. Defina `PHP_BINARY` e `PZ_TEST_PASSWORD` com a senha da configuração local, e execute `node tests/integration.mjs`. A senha não é registrada no código. O teste usa cópias temporárias e não modifica os dados da prévia.
+```sh
+php -d post_max_size=16M -d display_errors=0 -S 127.0.0.1:4173 -t docs router.php
+```
+
+Site: http://127.0.0.1:4173/; painel: http://127.0.0.1:4173/admin/. node server.mjs também inicia PHP; use PHP_BINARY se ele não estiver no PATH.
+
+tests/integration.mjs usa cópia temporária com sessões e dados isolados. Defina PHP_BINARY e PZ_TEST_PASSWORD conforme a configuração local e execute node tests/integration.mjs. Cobre autenticação, expiração, limite de tentativas, autorização, rascunhos, publicação, fotos e WhatsApp. node tests/contact.mjs valida o destino e a codificação da mensagem sem enviar mensagens externas.
 
 ## Imagens
 
-Fotografias ilustrativas do Unsplash: `photo-1600596542815-ffad4c1539a9`, `photo-1600585154340-be6161a56a0c`, `photo-1600210492486-724fe5c67fb0`, `photo-1600607687939-ce8a6c25118c`, `photo-1600566753086-00f18fb6b3ea` e `photo-1500382017468-9049fed747ef`.
+Logotipo fornecido para Patricia Zerger Imóveis. Fotografias de ambientação do Unsplash: photo-1600596542815-ffad4c1539a9 e photo-1600210492486-724fe5c67fb0. Fotos dos anúncios são enviadas pelo administrador durante o cadastro.

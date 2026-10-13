@@ -24,6 +24,10 @@ require_admin();
     <section class="admin-catalog" aria-labelledby="admin-count"><div class="admin-heading"><h2 id="admin-count">Carregando imóveis…</h2><span>Seu catálogo</span></div><div id="admin-list"></div>
     <?php require dirname(__DIR__, 2) . '/private/property-form.php'; ?>
     </section>
+    <section class="admin-catalog contact-settings" aria-labelledby="settings-title">
+      <div class="admin-heading"><h2 id="settings-title">Contato do site</h2><span>WhatsApp</span></div>
+      <form id="settings-form"><label for="whatsapp-number">Número do WhatsApp<input id="whatsapp-number" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40" aria-describedby="whatsapp-help"></label><p id="whatsapp-help">Inclua o código do país e o DDD. Para o Brasil, comece com +55. O número será usado nos contatos do site.</p><button class="button" type="submit" disabled>Salvar contato</button><p id="settings-status" role="status" aria-live="polite" hidden></p></form>
+    </section>
     <p class="admin-footnote">Imóveis publicados aparecem no site. Rascunhos ficam disponíveis apenas neste painel.</p>
   </main>
   <dialog id="confirm-dialog" class="confirm-dialog"><h3>Excluir este imóvel?</h3><p>Ele será removido do catálogo. Esta ação não pode ser desfeita.</p><div class="form-actions"><button id="confirm-delete" class="button danger">Excluir imóvel</button><button class="button outline" data-close>Cancelar</button></div></dialog>
