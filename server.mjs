@@ -1,8 +1,13 @@
-import http from 'node:http';
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+// Run the same PHP application used on the hosting server.
+import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), 'docs');
-const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.svg':'image/svg+xml'};
-const server=http.createServer(async(req,res)=>{try{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const target=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));if(!target.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}const content=await readFile(target);res.writeHead(200,{'Content-Type':types[path.extname(target)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(content);}catch{res.writeHead(404);res.end('Not found');}});
-server.listen(4173,'127.0.0.1',()=>console.log('Local: http://localhost:4173'));
+const root = fileURLToPath(new URL('.', import.meta.url));
+const php = process.env.PHP_BINARY || 'php';
+const child = spawn(php, ['-d', 'post_max_size=16M', '-d', 'display_errors=0', '-S', '127.0.0.1:4173', '-t', 'docs', 'router.php'], {cwd:root,stdio:'inherit'});
+child.on('error', error => {
+ console.error('Instale PHP 8.2+ ou defina PHP_BINARY com o caminho do php.exe.');
+ console.error(error.message); process.exitCode = 1;
+});
+child.on('exit', code => {process.exitCode = code || 0;});
+process.on('SIGINT', () => child.kill('SIGINT'));
+process.on('SIGTERM', () => child.kill('SIGTERM'));

@@ -1,56 +1,46 @@
 # Patricia Zerger Imóveis
 
-Protótipo responsivo de uma vitrine imobiliária em HTML, CSS e JavaScript.
-
-**Acesse:** https://andrezerg1.github.io/patricia-zerger-imoveis/
+Site imobiliário com catálogo no servidor, painel administrativo protegido e contato por WhatsApp. Destino de publicação: **www.patriciazergerimoveis.com.br**, em hospedagem HostGator com PHP e cPanel.
 
 ## Funcionalidades
 
-- Catálogo com seis imóveis ilustrativos.
-- Filtros combinados por tipo, bairro, preço, rua/código e quartos.
-- Ordenação por destaque, preço e área.
-- Detalhes do imóvel com galeria e formulário de interesse pré-preenchido.
-- Painel administrativo demonstrativo com criação, edição, rascunho e exclusão.
-- Upload de até oito fotos por imóvel, redimensionadas para até 1600 px.
-- Armazenamento de cadastros e imagens em IndexedDB no navegador.
-- Interface responsiva em verde, branco e cinza; sem cadastro de visitantes ou pagamentos.
+- Busca por tipo, bairro, preço, rua/código e quartos; ordenação por destaque, preço e área.
+- Detalhes de imóveis com galeria de até oito fotos.
+- Administração em /admin/: login, cadastro, edição, exclusão, destaque, rascunho e publicação.
+- Contato direto por WhatsApp na página principal e mensagem específica nos detalhes de cada imóvel. O ícone discreto aparece ao rolar a página e desaparece suavemente ao voltar ao topo.
+- Número comercial editável no painel. Valor inicial fornecido: +55 43 9855-9499.
+- Layout responsivo com logotipo fornecido e tipografia ajustada para celular e computador.
 
-## Limites do protótipo
-
-Os imóveis, endereços, características e valores são fictícios. O painel não possui autenticação. Não insira dados reais ou confidenciais. As alterações ficam somente no navegador e na origem do site; não são compartilhadas com outros visitantes ou dispositivos. Limpar os dados do navegador apaga os cadastros. O formulário de contato apenas simula o envio.
-
-A versão no GitHub Pages tem armazenamento local separado da prévia anterior. O catálogo demonstrativo é criado na primeira abertura.
-
-## Desenvolvimento local
-
-Com Node.js instalado:
-
-```sh
-git clone https://github.com/Andrezerg1/patricia-zerger-imoveis.git
-cd patricia-zerger-imoveis
-node server.mjs
-```
-
-Abra http://localhost:4173. Não há dependências de instalação ou etapa de build.
+A primeira instalação começa sem anúncios. Cadastre imóveis reais pelo painel. Um catálogo já existente em private/data é preservado. O painel usa uma conta única e gerencia imóveis e WhatsApp; não é um editor de textos ou de layout.
 
 ## Publicação
 
-O GitHub Pages publica a pasta `docs/` da branch `main`. Alterações enviadas para essa pasta atualizam o site automaticamente. Os caminhos de imagens, CSS e JavaScript são relativos para funcionar no endereço do projeto.
+O site está publicado na HostGator em **www.patriciazergerimoveis.com.br**. Siga o [passo a passo para a HostGator](HOSTGATOR.md) nas próximas instalações. Esta versão está em **codex/admin-hostgator**. A branch main ainda alimenta o GitHub Pages. Enviar ao GitHub não instala o site na HostGator; não mescle esta branch na fonte do Pages enquanto ele for usado, pois o painel exige PHP.
 
-```text
-docs/
-  index.html
-  styles.css
-  app.js
-  assets/
-  .nojekyll
-server.mjs
+O conteúdo de docs/ vai para a raiz pública, normalmente public_html/. A pasta private/ fica ao lado dela, fora da raiz pública. Não exige banco de dados, Composer ou Node.js no servidor.
+
+private/config.php, private/data/ e fotos de docs/uploads/ ficam fora do Git. Envie a configuração real separadamente se usar o ZIP do GitHub. Preserve esses arquivos nos backups e atualizações.
+
+Para gerar o pacote de primeira instalação no Windows com PowerShell 7:
+
+```powershell
+./scripts/package.ps1 -OutputPath C:/caminho/patricia-zerger-hostgator.zip -IncludeLocalConfig
 ```
 
-## Próximas etapas
+O parâmetro inclui a configuração local no pacote privado de instalação. Sem ele, o ZIP exige configurar a conta separadamente. Não publique esse pacote em repositórios ou dentro da raiz pública.
 
-Definir cidade de atuação, logotipo definitivo e canais oficiais. Implementar login administrativo seguro, API, banco de dados compartilhado, armazenamento de fotos e envio real de contatos. O GitHub Pages hospeda esta interface estática; os serviços de backend precisarão de hospedagem própria ou de um serviço externo.
+## Desenvolvimento e validação
+
+Requer PHP 8.2+; validado com PHP 8.4. Configure private/config.php a partir de private/config.example.php usando password_hash() para a senha. Execute na raiz:
+
+```sh
+php -d post_max_size=16M -d display_errors=0 -S 127.0.0.1:4173 -t docs router.php
+```
+
+Site: http://127.0.0.1:4173/; painel: http://127.0.0.1:4173/admin/. node server.mjs também inicia PHP; use PHP_BINARY se ele não estiver no PATH.
+
+tests/integration.mjs usa cópia temporária com sessões e dados isolados. Defina PHP_BINARY e PZ_TEST_PASSWORD conforme a configuração local e execute node tests/integration.mjs. Cobre autenticação, expiração, limite de tentativas, autorização, rascunhos, publicação, fotos e WhatsApp. node tests/contact.mjs valida o destino e a codificação da mensagem sem enviar mensagens externas.
 
 ## Imagens
 
-Fotografias ilustrativas do Unsplash: `photo-1600596542815-ffad4c1539a9`, `photo-1600585154340-be6161a56a0c`, `photo-1600210492486-724fe5c67fb0`, `photo-1600607687939-ce8a6c25118c`, `photo-1600566753086-00f18fb6b3ea` e `photo-1500382017468-9049fed747ef`.
+Logotipo fornecido para Patricia Zerger Imóveis. Fotografias de ambientação do Unsplash: photo-1600596542815-ffad4c1539a9 e photo-1600210492486-724fe5c67fb0. Fotos dos anúncios são enviadas pelo administrador durante o cadastro.
