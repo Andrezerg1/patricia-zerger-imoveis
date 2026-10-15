@@ -1,39 +1,28 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-
 const code=readFileSync(new URL('../docs/contact.js',import.meta.url),'utf8');
-function page(settings) {
- const listeners={}, button={disabled:true}, status={hidden:true}, link={hidden:true};
- const fields={name:'João & Maria',contact:'cliente@example.invalid',message:'Interesse no PZ-001? Valor & condições.\nUma nova linha.'};
- const form={querySelector:()=>button,addEventListener:(name,handler)=>listeners[name]=handler,reportValidity:()=>true};
- const nodes={'#contact-form':form,'#contact-status':status,'#whatsapp-link':link};
- const opened=[];
- const context=vm.createContext({document:{querySelector:selector=>nodes[selector]},fetch:async()=>({ok:true,json:async()=>settings}),FormData:function(){return Object.entries(fields);},window:{open:(...args)=>opened.push(args)}});
+function link(){return {dataset:{},attrs:{'aria-disabled':'true'},removeAttribute(k){delete this.attrs[k];if(k==='href')delete this.href;},setAttribute(k,v){this.attrs[k]=v;}};}
+function page(settings){
+ const home=link(),detail=link(),status={hidden:true};
+ const context=vm.createContext({document:{querySelector:selector=>selector==='#contact-status'?status:null,querySelectorAll:()=>[home,detail]},fetch:async()=>({ok:true,json:async()=>settings})});
  vm.runInContext(code,context);
- return {context,listeners,button,status,link,opened,form};
+ context.detail=detail;
+ vm.runInContext("configureWhatsAppLink(detail,'Interesse no PZ-001 — Casa & jardim?')",context);
+ return {context,home,detail,status};
 }
-const configured=page({whatsapp:'5511999999999'});
-await new Promise(resolve=>setImmediate(resolve));
-assert.equal(configured.button.disabled,false);
-configured.listeners.submit({preventDefault(){}});
-assert.equal(configured.opened.length,1);
-const url=new URL(configured.opened[0][0]);
-assert.equal(url.origin,'https://wa.me');
-assert.equal(url.pathname,'/5511999999999');
-assert.equal([...url.searchParams.keys()].length,1);
-assert.match(url.searchParams.get('text'),/João & Maria/);
-assert.match(url.searchParams.get('text'),/PZ-001\? Valor & condições\.\nUma nova linha\./);
-assert.equal(configured.link.href,url.href);
-assert.equal(configured.link.hidden,false);
-assert.match(configured.status.textContent,/confirme o envio/);
-assert.equal(configured.opened[0][2],'noopener,noreferrer');
-configured.listeners.input();assert.equal(configured.link.hidden,true);
-configured.form.reportValidity=()=>false;
-configured.listeners.submit({preventDefault(){}});assert.equal(configured.opened.length,1);
-const unavailable=page({whatsapp:''});
-await new Promise(resolve=>setImmediate(resolve));
-assert.equal(unavailable.button.disabled,true);
-assert.match(unavailable.status.textContent,/indisponível/);
-assert.throws(()=>vm.runInContext("whatsappUrl('javascript:alert(1)',{})",unavailable.context));
-console.log('PASS: WhatsApp destination, text encoding, validation, fallback and unavailable state. No external messages sent.');
+const ok=page({whatsapp:'554398559499'});
+await new Promise(setImmediate);
+assert.equal(new URL(ok.home.href).searchParams.get('text'),'Olá, Patricia! Gostaria de conversar com você.');
+assert.equal(new URL(ok.detail.href).searchParams.get('text'),'Interesse no PZ-001 — Casa & jardim?');
+assert.equal(new URL(ok.detail.href).pathname,'/554398559499');
+assert.equal(ok.home.attrs['aria-disabled'],undefined);
+vm.runInContext("configureWhatsAppLink(detail,'Outro imóvel PZ-002')",ok.context);
+assert.equal(new URL(ok.detail.href).searchParams.get('text'),'Outro imóvel PZ-002');
+assert.equal(new URL(ok.home.href).searchParams.get('text'),'Olá, Patricia! Gostaria de conversar com você.');
+const bad=page({whatsapp:'javascript:alert(1)'});
+await new Promise(setImmediate);
+assert.equal(bad.home.href,undefined);
+assert.equal(bad.detail.href,undefined);
+assert.equal(bad.status.hidden,false);
+console.log('PASS: general contact, property-specific message, async loading and unavailable contact.');

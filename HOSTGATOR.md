@@ -73,6 +73,7 @@ Dados antigos guardados no navegador não são importados automaticamente. Se j�
 
 ## 5. Atualizações e backups
 
+- O site foi instalado em www.patriciazergerimoveis.com.br. O redirecionamento HTTPS está em public_html/.htaccess; preserve também o handler PHP 8.4 que o cPanel acrescentou nesse arquivo.
 - Faça backup de **private/data**, **private/config.php** e **public_html/uploads**: catálogo, contato configurado, conta e fotos ficam fora do Git.
 - Em atualizações, envie os arquivos de código e preserve os dados, a configuração e as fotos existentes. O pacote não contém catálogo de execução nem fotos cadastradas localmente.
 - O painel atualiza o site neste domínio, sem alterar o GitHub ou a cópia anterior do GitHub Pages.

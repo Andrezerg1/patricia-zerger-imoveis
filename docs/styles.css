@@ -47,3 +47,12 @@ input, select, textarea { font-size: 16px; }
  .header .brand { width: min(300px, calc(100vw - 100px)); }
  .footer-top .brand { width: min(300px, 100%); }
 }
+
+/* Direct WhatsApp contact, with a single action on the home page. */
+.contact-section{align-items:center}.contact-action{display:flex;flex-direction:column;align-items:flex-start;gap:16px}.contact-action .button{white-space:normal;text-align:center;min-height:56px}.contact-action p{margin:0}.button[aria-disabled="true"]{opacity:.6;cursor:wait}.contact-section .contact-action p{font-size:15px}@media(max-width:650px){.contact-action .button{width:100%;justify-content:center}.contact-section{gap:24px}}
+
+.whatsapp-float{position:fixed;right:22px;bottom:22px;bottom:max(22px,env(safe-area-inset-bottom));z-index:10;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--green);color:#fff;box-shadow:0 3px 12px #17332126;transition:background .2s}.whatsapp-float svg{width:23px;height:23px}.whatsapp-float:hover{background:#32634e}.whatsapp-float:focus-visible{outline:3px solid #95b88a;outline-offset:4px}.whatsapp-float[aria-disabled="true"]{display:none}@media(max-width:650px){.whatsapp-float{right:16px;bottom:16px;bottom:max(16px,env(safe-area-inset-bottom));width:44px;height:44px}.footer-bottom{padding-bottom:55px}}
+/* Matching entrance and exit as the visitor scrolls. */
+.whatsapp-float{opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease,visibility .3s,background .2s}
+.whatsapp-float.is-visible{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+@media(prefers-reduced-motion:reduce){.whatsapp-float{transition:none;transform:none}}

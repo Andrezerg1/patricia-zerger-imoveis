@@ -7,7 +7,7 @@ Site imobiliário com catálogo no servidor, painel administrativo protegido e c
 - Busca por tipo, bairro, preço, rua/código e quartos; ordenação por destaque, preço e área.
 - Detalhes de imóveis com galeria de até oito fotos.
 - Administração em /admin/: login, cadastro, edição, exclusão, destaque, rascunho e publicação.
-- Contato por WhatsApp com texto preparado pelo formulário; o visitante confirma o envio no WhatsApp. O site não armazena esses dados.
+- Contato direto por WhatsApp na página principal e mensagem específica nos detalhes de cada imóvel. O ícone discreto aparece ao rolar a página e desaparece suavemente ao voltar ao topo.
 - Número comercial editável no painel. Valor inicial fornecido: +55 43 9855-9499.
 - Layout responsivo com logotipo fornecido e tipografia ajustada para celular e computador.
 
@@ -15,7 +15,7 @@ A primeira instalação começa sem anúncios. Cadastre imóveis reais pelo pain
 
 ## Publicação
 
-Siga o [passo a passo para a HostGator](HOSTGATOR.md). Esta versão está em **codex/admin-hostgator**. A branch main ainda alimenta o GitHub Pages. Enviar ao GitHub não instala o site na HostGator; não mescle esta branch na fonte do Pages enquanto ele for usado, pois o painel exige PHP.
+O site está publicado na HostGator em **www.patriciazergerimoveis.com.br**. Siga o [passo a passo para a HostGator](HOSTGATOR.md) nas próximas instalações. Esta versão está em **codex/admin-hostgator**. A branch main ainda alimenta o GitHub Pages. Enviar ao GitHub não instala o site na HostGator; não mescle esta branch na fonte do Pages enquanto ele for usado, pois o painel exige PHP.
 
 O conteúdo de docs/ vai para a raiz pública, normalmente public_html/. A pasta private/ fica ao lado dela, fora da raiz pública. Não exige banco de dados, Composer ou Node.js no servidor.
 
